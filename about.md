@@ -10,8 +10,7 @@ lede: "A co-op, top-down action RPG set in Tenebreth, a world swallowed by darkn
 ## The world
 
 - Tenebreth was once called Lucereth. Then its greatest heroes opened something in the far west that should have stayed closed. Demons and spirits poured out, a black cloud covered the sky, and half the lands and their people were lost before anyone could organise a defence.
-
-- What remains of humanity has fallen back to the east, to **Epistrepho**: the last city, built around a Grand Cathedral on a cliff. Its name means *to turn back*. Paladins and Priests hold its walls, Mages lend their combined power, and adventurers keep the surrounding land clear.
+What remains of humanity has fallen back to the east, to **Epistrepho**: the last city, built around a Grand Cathedral on a cliff. Its name means *to turn back*. Paladins and Priests hold its walls, Mages lend their combined power, and adventurers keep the surrounding land clear.
 
 ## You
 - You are a devout villager who lost everything to a demon attack: your family, your home, and your memory. You wake in the backstreets of Epistrepho with nothing but rags and a wedding ring, choose a new name, and decide what to live for.
@@ -21,7 +20,7 @@ lede: "A co-op, top-down action RPG set in Tenebreth, a world swallowed by darkn
 - Every faction fights the Darkness in its own way, and no method is off-limits if it is used against Evil. At the end of the prologue you seek out one of them and receive its **Blessing**.
 
 - The Church:
-Priests who heal anyone anyone in need, and Paladins who hold the wall.
+Priests who heal anyone in need, and Paladins who hold the wall.
 
 - The Mages Consortium:
 The four elemental schools of Fire, Water, Air and Earth, united under one banner.
