@@ -1,0 +1,12 @@
+{% comment %} Embeds a YouTube video in privacy-enhanced mode (no YouTube cookies until someone presses play). Parameters: id, caption (optional). See README.md for an example. {% endcomment %}
+<figure class="video">
+  <div class="video-frame">
+    <iframe src="https://www.youtube-nocookie.com/embed/{{ include.id }}?rel=0"
+            title="{{ include.title | default: include.caption | default: 'YouTube video' | escape }}"
+            loading="lazy"
+            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+  </div>
+  {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

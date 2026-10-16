@@ -1,0 +1,6 @@
+{% comment %} Two screenshots side by side, stacked on phones. Parameters: left, left_alt, right, right_alt, caption (optional). See README.md for an example. {% endcomment %}
+<figure class="pair">
+  <img src="{{ include.left | relative_url }}" alt="{{ include.left_alt | escape }}" loading="lazy" decoding="async">
+  <img src="{{ include.right | relative_url }}" alt="{{ include.right_alt | escape }}" loading="lazy" decoding="async">
+  {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

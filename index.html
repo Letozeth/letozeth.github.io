@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<main id="content" class="wrap layout">
+  <div class="home">
+    {% assign latest = site.posts.first %}
+    {% if latest %}
+    <article class="featured">
+      <div class="meta">
+        <span>Latest · Devlog #{{ site.posts.size }}</span>
+        <time datetime="{{ latest.date | date_to_xmlschema }}">{{ latest.date | date: "%-d %B %Y" }}</time>
+        {% if latest.build %}<span class="build">Build {{ latest.build }}</span>{% endif %}
+      </div>
+      <h1 class="post-title"><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h1>
+      <p class="lede">{{ latest.lede | default: latest.excerpt | strip_html | truncatewords: 60 }}</p>
+      <a class="readmore" href="{{ latest.url | relative_url }}">Read the entry →</a>
+    </article>
+    {% endif %}
+
+    {% if site.posts.size > 1 %}
+    <section class="earlier">
+      <h2 class="section-h">Earlier entries</h2>
+      <ol class="entries">
+        {% for p in site.posts offset: 1 limit: 10 %}
+        {% assign n = site.posts.size | minus: forloop.index %}
+        <li>
+          <span class="entry-n">#{{ n }}</span>
+          <div>
+            <a class="entry-title" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+            <p>{{ p.lede | default: p.excerpt | strip_html | truncatewords: 28 }}</p>
+          </div>
+          <time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%-d %b %Y" }}</time>
+        </li>
+        {% endfor %}
+      </ol>
+      {% if site.posts.size > 11 %}<p><a href="{{ '/archive/' | relative_url }}">All entries →</a></p>{% endif %}
+    </section>
+    {% endif %}
+  </div>
+  {% include sidebar.html %}
+</main>

@@ -1,0 +1,57 @@
+# ─────────────────────────────────────────────────────────────
+#  Ashen Light devlog: site settings
+#  Made with the site builder. You can also edit this file directly.
+#  Leave a link empty ("") and its button or link won't appear.
+# ─────────────────────────────────────────────────────────────
+
+title: "Ashen Light"
+tagline: "- A world fallen to its own hubris -"
+description: "The development log of Ashen Light, a co-op, top-down action RPG set in Tenebreth, a world swallowed by darkness."
+author: "Letozeth"
+
+status: "In development"
+release: "Coming to Steam"
+
+# Header: "image" shows assets/images/header.jpg, "drawn" shows the drawn skyline
+header_style: "image"
+
+steam_url: ""
+youtube_url: ""
+discord_url: ""
+
+# Technical settings. You normally don't need to touch these.
+
+url: "https://letozeth.github.io"
+baseurl: ""
+lang: en
+timezone: Europe/Berlin
+
+permalink: /devlog/:year/:month/:title/
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/social-card.jpg
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+feed:
+  path: feed.xml
+
+exclude:
+  - README.md
+  - _templates
+  - Gemfile
+  - Gemfile.lock

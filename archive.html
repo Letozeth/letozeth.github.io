@@ -1,0 +1,30 @@
+---
+layout: default
+title: Archive
+permalink: /archive/
+---
+<main id="content" class="wrap layout">
+  <div class="home">
+    <h1 class="post-title">Every entry</h1>
+    {% assign by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
+    {% for year in by_year %}
+    <section class="earlier">
+      <h2 class="section-h">{{ year.name }}</h2>
+      <ol class="entries">
+        {% for p in year.items %}
+        {% assign n = 0 %}
+        {% for q in site.posts %}{% if q.url == p.url %}{% assign n = site.posts.size | minus: forloop.index0 %}{% endif %}{% endfor %}
+        <li>
+          <span class="entry-n">#{{ n }}</span>
+          <div>
+            <a class="entry-title" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+          </div>
+          <time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%-d %b" }}</time>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endfor %}
+  </div>
+  {% include sidebar.html %}
+</main>

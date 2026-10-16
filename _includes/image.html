@@ -1,0 +1,5 @@
+{% comment %} A screenshot with an optional caption. Parameters: src, alt, caption (optional). See README.md for an example. {% endcomment %}
+<figure class="shot">
+  <img src="{{ include.src | relative_url }}" alt="{{ include.alt | escape }}" loading="lazy" decoding="async">
+  {% if include.caption %}<figcaption>{{ include.caption }}</figcaption>{% endif %}
+</figure>

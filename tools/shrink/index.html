@@ -1,0 +1,151 @@
+---
+layout: null
+sitemap: false
+permalink: /tools/shrink/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<title>Screenshot Shrinker · Ashen Light</title>
+<link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+  .tool { max-width: 760px; padding-block: 48px 80px; }
+  .drop {
+    display: grid; place-items: center; text-align: center; gap: 6px;
+    min-height: 200px; padding: 24px;
+    border: 2px dashed var(--rule); border-radius: 6px; background: var(--ash);
+    cursor: pointer; transition: border-color .15s, background .15s;
+  }
+  .drop:hover, .drop.over { border-color: var(--ember); }
+  .drop strong { font-family: var(--f-display); font-size: var(--step-2); line-height: 1.1; }
+  .drop span { color: var(--dust); font-size: 1rem; }
+  .settings { display: flex; flex-wrap: wrap; gap: 16px 28px; margin: 24px 0; font-family: var(--f-mono); font-size: var(--step--1); color: var(--dust); }
+  .settings label { display: flex; align-items: center; gap: 8px; }
+  .settings select, .settings input[type=range] { accent-color: var(--ember); }
+  .settings select { background: var(--ash); color: var(--bone); border: 1px solid var(--rule); border-radius: 3px; padding: 4px 6px; font: inherit; }
+  .results { list-style: none; margin: 0; padding: 0; }
+  .results li {
+    display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 16px; align-items: center;
+    padding: 12px 0; border-bottom: 1px dashed var(--rule);
+  }
+  .results img { width: 72px; height: 41px; object-fit: cover; border-radius: 3px; background: #000; }
+  .results .name { font-family: var(--f-mono); font-size: 0.875rem; overflow-wrap: anywhere; }
+  .results .sizes { font-family: var(--f-mono); font-size: 0.75rem; color: var(--dust); font-variant-numeric: tabular-nums; }
+  .results .sizes b { color: var(--ember); font-weight: 500; }
+  .btn {
+    font-family: var(--f-mono); font-size: var(--step--1); letter-spacing: .08em; text-transform: uppercase;
+    background: none; color: var(--ember); border: 1px solid var(--ember); border-radius: 3px; padding: 6px 12px;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+  }
+  .btn:hover { background: var(--ember); color: var(--on-ember); }
+  .btn.solid { background: var(--ember); color: var(--on-ember); }
+  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 20px; }
+  .total { font-family: var(--f-mono); font-size: var(--step--1); color: var(--dust); }
+  @media (max-width: 520px) { .results li { grid-template-columns: 56px minmax(0, 1fr); } .results img { width: 56px; height: 32px; } .results .btn { grid-column: 2; justify-self: start; } }
+</style>
+</head>
+<body>
+<main class="wrap tool">
+  <div class="meta"><span>Tool</span><span>Runs in your browser · nothing is uploaded</span></div>
+  <h1 class="post-title">Screenshot Shrinker</h1>
+  <p class="lede">Drop in screenshots straight from the game. They come out resized and saved as small JPGs, ready to put in <code>assets/images/posts</code>.</p>
+
+  <label class="drop" id="drop" for="files">
+    <strong>Drop screenshots here</strong>
+    <span>or click to choose files (PNG, JPG, WebP)</span>
+  </label>
+  <input id="files" type="file" accept="image/*" multiple hidden>
+
+  <div class="settings">
+    <label for="maxw">Max width
+      <select id="maxw">
+        <option value="1920" selected>1920 px</option>
+        <option value="1600">1600 px</option>
+        <option value="1280">1280 px</option>
+      </select>
+    </label>
+    <label for="q">Quality <input id="q" type="range" min="60" max="95" value="82"> <output id="qv">82</output></label>
+    <label for="fmt">Save as
+      <select id="fmt">
+        <option value="jpeg" selected>JPG (game scenes)</option>
+        <option value="png">PNG (crisp UI, pixel art)</option>
+      </select>
+    </label>
+  </div>
+
+  <ul class="results" id="results"></ul>
+  <div class="bar" id="bar" hidden>
+    <span class="total" id="total"></span>
+    <button class="btn solid" id="all" type="button">Download all</button>
+  </div>
+</main>
+<script>
+(function () {
+  var drop = document.getElementById('drop'), input = document.getElementById('files');
+  var list = document.getElementById('results'), bar = document.getElementById('bar'), total = document.getElementById('total');
+  var q = document.getElementById('q'), qv = document.getElementById('qv');
+  var done = [], before = 0, after = 0;
+  q.addEventListener('input', function () { qv.textContent = q.value; });
+
+  function kb(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.round(n / 1024) + ' KB'; }
+  function slug(name) {
+    return name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'screenshot';
+  }
+
+  async function shrink(file) {
+    var maxW = +document.getElementById('maxw').value;
+    var fmt = document.getElementById('fmt').value;
+    var bmp = await createImageBitmap(file);
+    var scale = Math.min(1, maxW / bmp.width);
+    var w = Math.round(bmp.width * scale), h = Math.round(bmp.height * scale);
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var ctx = c.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    if (fmt === 'jpeg') { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h); }
+    ctx.drawImage(bmp, 0, 0, w, h);
+    var blob = await new Promise(function (res) { c.toBlob(res, 'image/' + fmt, +q.value / 100); });
+    return { blob: blob, w: w, h: h, name: slug(file.name) + (fmt === 'jpeg' ? '.jpg' : '.png') };
+  }
+
+  async function handle(files) {
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      if (!/^image\//.test(f.type)) continue;
+      var li = document.createElement('li');
+      li.innerHTML = '<img alt=""><div><div class="name"></div><div class="sizes">Working…</div></div>';
+      li.querySelector('.name').textContent = f.name;
+      list.appendChild(li);
+      try {
+        var r = await shrink(f);
+        var url = URL.createObjectURL(r.blob);
+        li.querySelector('img').src = url;
+        li.querySelector('.name').textContent = r.name;
+        li.querySelector('.sizes').innerHTML = kb(f.size) + ' → <b>' + kb(r.blob.size) + '</b> · ' + r.w + '×' + r.h;
+        var a = document.createElement('a');
+        a.className = 'btn'; a.href = url; a.download = r.name; a.textContent = 'Download';
+        li.appendChild(a);
+        done.push(a); before += f.size; after += r.blob.size;
+        total.textContent = done.length + ' image' + (done.length > 1 ? 's' : '') + ': ' + kb(before) + ' → ' + kb(after);
+        bar.hidden = false;
+      } catch (e) {
+        li.querySelector('.sizes').textContent = "Couldn't read this image. Try saving it as PNG or JPG first.";
+      }
+    }
+  }
+
+  input.addEventListener('change', function () { handle(input.files); input.value = ''; });
+  ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { handle(e.dataTransfer.files); });
+  document.getElementById('all').addEventListener('click', function () {
+    done.forEach(function (a, i) { setTimeout(function () { a.click(); }, i * 250); });
+  });
+})();
+</script>
+</body>
+</html>

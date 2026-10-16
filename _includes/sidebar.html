@@ -1,0 +1,43 @@
+<aside class="sidebar">
+  <section class="side">
+    <h2 class="side-h">The game</h2>
+    <p>{{ site.title }} is a co-op, top-down action RPG set in Tenebreth, a world swallowed by darkness. Humanity's last city still holds the line.</p>
+    <p><a href="{{ '/about/' | relative_url }}">More about the game →</a></p>
+  </section>
+
+  <section class="side">
+    <h2 class="side-h">Status</h2>
+    <p class="status"><span class="status-dot" aria-hidden="true"></span>{{ site.status }}</p>
+    {% if site.steam_url and site.steam_url != "" %}
+      <a class="cta" href="{{ site.steam_url }}">Wishlist on Steam</a>
+    {% else %}
+      <p class="muted">{{ site.release }}</p>
+    {% endif %}
+  </section>
+
+  {% if site.posts.size > 0 %}
+  <section class="side">
+    <h2 class="side-h">Logbook</h2>
+    <ol class="logbook">
+      {% for p in site.posts limit: 6 %}
+      {% assign n = site.posts.size | minus: forloop.index0 %}
+      <li>
+        <span class="logbook-n">#{{ n }}</span>
+        <span><a href="{{ p.url | relative_url }}"{% if p.url == page.url %} aria-current="page"{% endif %}>{{ p.title }}</a>
+        <time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: "%-d %b %Y" }}</time></span>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if site.posts.size > 6 %}<p><a href="{{ '/archive/' | relative_url }}">All entries →</a></p>{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="side">
+    <h2 class="side-h">Follow along</h2>
+    <ul class="follow">
+      {% if site.youtube_url and site.youtube_url != "" %}<li><a href="{{ site.youtube_url }}">YouTube</a></li>{% endif %}
+      {% if site.discord_url and site.discord_url != "" %}<li><a href="{{ site.discord_url }}">Discord</a></li>{% endif %}
+      <li><a href="{{ '/feed.xml' | relative_url }}">RSS feed</a></li>
+    </ul>
+  </section>
+</aside>
