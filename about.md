@@ -33,6 +33,7 @@ Mages who turn the Darkness against itself, always wrestling demons for control 
 
 ## Blessings
 - A Blessing is almost like a class that helps define your build, it doesn't lock you in and it doesn't limit you. It gives you starting attributes and a talent point head start in the given talent tree. Seven talent trees share one pool of points, so a Warrior can still go all-in on Fire.
+
 ## Warrior Blessing Example
 - Strength +10
 - Endurance +10
