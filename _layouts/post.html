@@ -27,6 +27,7 @@ layout: default
       {% if page.previous %}<a class="prev" href="{{ page.previous.url | relative_url }}"><span>Earlier</span>{{ page.previous.title }}</a>{% endif %}
       {% if page.next %}<a class="next" href="{{ page.next.url | relative_url }}"><span>Later</span>{{ page.next.title }}</a>{% endif %}
     </nav>
+    {% include comments.html %}
   </article>
   {% include sidebar.html %}
 </main>

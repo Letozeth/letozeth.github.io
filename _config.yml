@@ -19,6 +19,10 @@ steam_url: ""
 youtube_url: ""
 discord_url: ""
 
+# Comments: your Firebase project ID turns on comments under every post. Leave empty to hide them.
+comments_project_id: "ashenlightcomments"
+comments_api_key: ""
+
 # Technical settings. You normally don't need to touch these.
 
 url: "https://letozeth.github.io"

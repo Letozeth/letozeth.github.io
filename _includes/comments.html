@@ -1,0 +1,30 @@
+{% comment %} Comment section at the bottom of each post. Shown only when comments_project_id is set in _config.yml. Comments are stored in Firebase (Cloud Firestore); see README.md. {% endcomment %}
+{% if site.comments_project_id and site.comments_project_id != "" %}
+<section class="comments" id="comments" aria-labelledby="comments-h"
+         data-project="{{ site.comments_project_id }}" data-key="{{ site.comments_api_key }}" data-thread="{{ page.url }}">
+  <h2 class="comments-h" id="comments-h">Comments <span class="comments-count"></span></h2>
+  <ol class="comment-list" aria-live="polite">
+    <li class="comment-note">Loading comments…</li>
+  </ol>
+  <form class="comment-form" novalidate>
+    <div class="cf-field">
+      <label for="cf-name">Name <span>(optional)</span></label>
+      <input id="cf-name" name="name" maxlength="40" autocomplete="nickname" placeholder="Anonymous">
+    </div>
+    <div class="cf-field">
+      <label for="cf-text">Comment</label>
+      <textarea id="cf-text" name="text" rows="4" maxlength="2000" required></textarea>
+    </div>
+    <div class="cf-trap" aria-hidden="true">
+      <label for="cf-site">Leave this empty</label>
+      <input id="cf-site" name="website" tabindex="-1" autocomplete="off">
+    </div>
+    <div class="cf-foot">
+      <span class="cf-note">Comments are public and appear right away.</span>
+      <button type="submit" class="cf-send">Post comment</button>
+    </div>
+    <p class="cf-msg" role="status"></p>
+  </form>
+</section>
+<script src="{{ '/assets/js/comments.js' | relative_url }}" defer></script>
+{% endif %}

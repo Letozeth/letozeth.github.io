@@ -242,6 +242,46 @@ figcaption { margin-top: 8px; font-family: var(--f-mono); font-size: var(--step-
 .postnav span { display: block; font-family: var(--f-mono); font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase; color: var(--dust); margin-bottom: 4px; }
 .postnav .next { grid-column: 2; text-align: right; }
 
+/* ── Comments ─────────────────────────────────────────────── */
+.comments { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.comments-h {
+  font-family: var(--f-display); font-weight: 700; font-size: var(--step-2); line-height: 1.1;
+  letter-spacing: 0.02em; margin: 0 0 8px;
+}
+.comments-count { font-family: var(--f-mono); font-weight: 400; font-size: var(--step--1); color: var(--dust); letter-spacing: 0.06em; }
+.comment-list { list-style: none; margin: 0 0 28px; padding: 0; }
+.comment { padding: 16px 0; border-bottom: 1px dashed var(--rule); }
+.comment-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.comment-meta strong { font-family: var(--f-body); font-weight: 700; color: var(--bone); }
+.comment-meta time { font-family: var(--f-mono); font-size: 0.75rem; color: var(--dust); letter-spacing: 0.04em; }
+.comment-text { margin: 6px 0 0; font-size: 1rem; line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+.comment-note { padding: 14px 0; color: var(--dust); font-size: 1rem; }
+.comment-form { display: grid; gap: 14px; background: var(--ash); border: 1px solid var(--rule); border-radius: 4px; padding: 18px; }
+.cf-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cf-field label { font-family: var(--f-mono); font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--dust); }
+.cf-field label span { text-transform: none; letter-spacing: 0.02em; }
+.cf-field input, .cf-field textarea {
+  width: 100%; font: inherit; font-size: 1rem; color: var(--bone);
+  background: var(--night); border: 1px solid var(--rule); border-radius: 3px; padding: 9px 11px;
+}
+.cf-field input { max-width: 320px; }
+.cf-field textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
+.cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: var(--ember); }
+.cf-field input::placeholder { color: var(--dust); opacity: 0.7; }
+.cf-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.cf-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.cf-note { font-size: 0.875rem; color: var(--dust); }
+.cf-send {
+  font-family: var(--f-mono); font-size: var(--step--1); letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--ember); color: var(--on-ember); border: 0; border-radius: 3px; padding: 9px 16px; cursor: pointer;
+}
+.cf-send:hover { background: var(--ember-light); }
+.cf-send[disabled] { opacity: 0.6; cursor: default; }
+.cf-msg { margin: 0; font-size: 0.9375rem; color: var(--dust); }
+.cf-msg:empty { display: none; }
+.cf-msg.ok { color: #9fd0a6; }
+.cf-msg.err { color: #e8907a; }
+
 /* ── Front page ───────────────────────────────────────────── */
 .featured { padding-bottom: 8px; }
 .readmore {
