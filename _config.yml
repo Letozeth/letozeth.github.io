@@ -5,7 +5,7 @@
 # ─────────────────────────────────────────────────────────────
 
 title: "Ashen Light"
-tagline: "- A world fallen to its own hubris -"
+tagline: " A world fallen to its own hubris"
 description: "The development log of Ashen Light, a co-op, top-down action RPG set in Tenebreth, a world swallowed by darkness."
 author: "Letozeth"
 
@@ -17,7 +17,7 @@ header_style: "image"
 
 steam_url: ""
 youtube_url: ""
-discord_url: ""
+discord_url: "https://discord.gg/qqsJRF3HAh"
 
 # Comments: your Firebase project ID turns on comments under every post. Leave empty to hide them.
 comments_project_id: "ashenlightcomments"

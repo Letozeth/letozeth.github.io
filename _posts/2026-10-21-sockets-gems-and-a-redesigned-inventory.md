@@ -16,7 +16,7 @@ Sockets can also be added with a gold-sink & material spending mechanic at the j
 ## Jeweler
 New NPC, sells lower quality gems, adds sockets to equipment, combines gems to upgrade them.
 
-## A redesign of thee Inventory & Equipment UI.
+## A redesign of the Inventory & Equipment UI.
 This is something that had to be done to get the socket slots to appear the way I wanted it to. It's essentially identical to Diablo 2. This opens up the potential for a "Runeword" style system later if I decide to add one.
 
 {% include image.html src="/assets/images/posts/newui-inventory.jpg" alt="The new Inventory Redesign" %}
